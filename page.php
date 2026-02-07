@@ -4,6 +4,12 @@ get_header();
 
 <main id="primary" class="site-main main-container">
     <div class="layout-grid">
+        <aside class="sidebar-left-ad">
+            <?php if (is_active_sidebar('sidebar-left-ad')) : ?>
+                <?php dynamic_sidebar('sidebar-left-ad'); ?>
+            <?php endif; ?>
+        </aside>
+
         <div class="content-area">
             <div class="single-post-container">
 
