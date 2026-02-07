@@ -1,0 +1,86 @@
+<svg width="1200" height="900" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="1200" height="900" fill="#0f172a"/>
+  
+  <!-- Header -->
+  <rect width="1200" height="80" fill="#1e293b"/>
+  <text x="40" y="50" font-family="Arial, sans-serif" font-size="28" font-weight="bold" fill="#60a5fa">
+    &gt;_ANHQV
+  </text>
+  <text x="200" y="50" font-family="Arial, sans-serif" font-size="14" fill="#94a3b8">
+    TECH MAGAZINE
+  </text>
+  
+  <!-- Main Content Area -->
+  <g transform="translate(40, 120)">
+    <!-- Card 1 -->
+    <rect width="350" height="400" rx="20" fill="#1e293b"/>
+    <rect width="350" height="200" rx="20" fill="#334155"/>
+    <text x="20" y="240" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#f59e0b">
+      TECHNOLOGY
+    </text>
+    <text x="20" y="270" font-family="Arial, sans-serif" font-size="18" font-weight="bold" fill="#f8fafc">
+      Modern Theme
+    </text>
+    <text x="20" y="300" font-family="Arial, sans-serif" font-size="14" fill="#94a3b8">
+      Dark mode with
+    </text>
+    <text x="20" y="320" font-family="Arial, sans-serif" font-size="14" fill="#94a3b8">
+      glassmorphism effects
+    </text>
+    
+    <!-- Card 2 -->
+    <g transform="translate(390, 0)">
+      <rect width="350" height="400" rx="20" fill="#1e293b"/>
+      <rect width="350" height="200" rx="20" fill="#334155"/>
+      <text x="20" y="240" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#f59e0b">
+        FEATURES
+      </text>
+      <text x="20" y="270" font-family="Arial, sans-serif" font-size="18" font-weight="bold" fill="#f8fafc">
+        SEO Optimized
+      </text>
+      <text x="20" y="300" font-family="Arial, sans-serif" font-size="14" fill="#94a3b8">
+        Schema.org &amp; Open
+      </text>
+      <text x="20" y="320" font-family="Arial, sans-serif" font-size="14" fill="#94a3b8">
+        Graph ready
+      </text>
+    </g>
+    
+    <!-- Card 3 -->
+    <g transform="translate(780, 0)">
+      <rect width="350" height="400" rx="20" fill="#1e293b"/>
+      <rect width="350" height="200" rx="20" fill="#334155"/>
+      <text x="20" y="240" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#f59e0b">
+        PERFORMANCE
+      </text>
+      <text x="20" y="270" font-family="Arial, sans-serif" font-size="18" font-weight="bold" fill="#f8fafc">
+        Fast Loading
+      </text>
+      <text x="20" y="300" font-family="Arial, sans-serif" font-size="14" fill="#94a3b8">
+        Lazy loading &amp;
+      </text>
+      <text x="20" y="320" font-family="Arial, sans-serif" font-size="14" fill="#94a3b8">
+        optimized assets
+      </text>
+    </g>
+  </g>
+  
+  <!-- Sidebar -->
+  <rect x="40" y="560" width="340" height="280" rx="16" fill="#1e293b"/>
+  <text x="60" y="600" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#60a5fa">
+    Sidebar Widget
+  </text>
+  <line x1="60" y1="610" x2="360" y2="610" stroke="#334155" stroke-width="2"/>
+  
+  <!-- Version Badge -->
+  <rect x="1000" y="820" width="160" height="50" rx="8" fill="#3b82f6"/>
+  <text x="1030" y="850" font-family="Arial, sans-serif" font-size="20" font-weight="bold" fill="white">
+    v2.2.0
+  </text>
+  
+  <!-- Footer -->
+  <text x="40" y="870" font-family="Arial, sans-serif" font-size="12" fill="#94a3b8">
+    ANHQV Tech Theme - Powered by Antigravity AI
+  </text>
+</svg>

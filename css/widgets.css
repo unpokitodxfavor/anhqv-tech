@@ -1,0 +1,369 @@
+/**
+ * ANHQV Tech - Custom Widgets Styles
+ * Estilos para los widgets personalizados
+ */
+
+/* ==================== */
+/* Widget: Posts Populares */
+/* ==================== */
+
+.popular-posts-widget {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.popular-post-item {
+    display: flex;
+    gap: 1rem;
+    padding: 1rem 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.popular-post-item:last-child {
+    border-bottom: none;
+}
+
+.popular-post-thumb {
+    flex-shrink: 0;
+    width: 80px;
+    height: 80px;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.popular-post-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.popular-post-item:hover .popular-post-thumb img {
+    transform: scale(1.1);
+}
+
+.popular-post-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.popular-post-title {
+    font-size: 0.9rem;
+    margin: 0;
+    line-height: 1.3;
+    font-weight: 600;
+}
+
+.popular-post-title a {
+    color: var(--text-main);
+    transition: color 0.2s ease;
+}
+
+.popular-post-title a:hover {
+    color: var(--accent-primary);
+}
+
+.popular-post-meta {
+    display: flex;
+    gap: 0.75rem;
+    font-size: 0.75rem;
+    color: var(--text-muted);
+}
+
+.post-views {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+.post-views::before {
+    content: '';
+}
+
+/* ==================== */
+/* Widget: Categorías con Iconos */
+/* ==================== */
+
+.icon-categories-widget {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.icon-category-item {
+    margin-bottom: 0.75rem;
+}
+
+.category-link {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    color: var(--text-main);
+    text-decoration: none;
+}
+
+.category-link:hover {
+    background: rgba(59, 130, 246, 0.1);
+    transform: translateX(5px);
+    color: var(--accent-primary);
+}
+
+.category-icon {
+    font-size: 1.25rem;
+    flex-shrink: 0;
+}
+
+.category-name {
+    flex: 1;
+    font-weight: 500;
+}
+
+.category-count {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    background: rgba(255, 255, 255, 0.05);
+    padding: 2px 8px;
+    border-radius: 12px;
+}
+
+/* ==================== */
+/* Widget: Redes Sociales */
+/* ==================== */
+
+.social-links-widget {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+}
+
+.social-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 45px;
+    height: 45px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 50%;
+    transition: all 0.3s ease;
+    color: var(--text-main);
+}
+
+.social-link:hover {
+    transform: translateY(-3px) scale(1.1);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.social-link.twitter:hover {
+    background: #1DA1F2;
+    color: white;
+}
+
+.social-link.facebook:hover {
+    background: #1877F2;
+    color: white;
+}
+
+.social-link.instagram:hover {
+    background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+    color: white;
+}
+
+.social-link.youtube:hover {
+    background: #FF0000;
+    color: white;
+}
+
+.social-link.github:hover {
+    background: #333;
+    color: white;
+}
+
+.social-link.linkedin:hover {
+    background: #0077B5;
+    color: white;
+}
+
+.social-link.rss:hover {
+    background: #FFA500;
+    color: white;
+}
+
+/* ==================== */
+/* Widget: Sobre el Autor */
+/* ==================== */
+
+.about-widget {
+    text-align: center;
+    padding: 1.5rem;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 16px;
+}
+
+.about-avatar {
+    width: 100px;
+    height: 100px;
+    margin: 0 auto 1rem;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 3px solid var(--accent-primary);
+    box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+}
+
+.about-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.about-name {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin: 0 0 0.75rem 0;
+    color: var(--accent-glow);
+}
+
+.about-description {
+    font-size: 0.9rem;
+    line-height: 1.6;
+    color: var(--text-muted);
+    margin: 0;
+}
+
+/* ==================== */
+/* Widget: Posts por Categoría */
+/* ==================== */
+
+.category-posts-widget {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.category-post-item {
+    margin-bottom: 0.75rem;
+}
+
+.category-post-link {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    padding: 0.75rem;
+    background: rgba(255, 255, 255, 0.02);
+    border-radius: 8px;
+    border-left: 3px solid var(--accent-primary);
+    transition: all 0.3s ease;
+    text-decoration: none;
+}
+
+.category-post-link:hover {
+    background: rgba(255, 255, 255, 0.05);
+    transform: translateX(5px);
+}
+
+.category-post-title {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text-main);
+    line-height: 1.3;
+}
+
+.category-post-date {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+}
+
+/* ==================== */
+/* Widget: Nube de Tags */
+/* ==================== */
+
+.tags-cloud-widget {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.tag-item {
+    display: inline-block;
+    padding: 0.4rem 0.85rem;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 20px;
+    font-size: 0.8rem;
+    color: var(--text-main);
+    text-decoration: none;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.tag-item:hover {
+    background: var(--accent-primary);
+    border-color: var(--accent-primary);
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(59, 130, 246, 0.3);
+}
+
+/* ==================== */
+/* Responsive Adjustments */
+/* ==================== */
+
+@media (max-width: 768px) {
+    .popular-post-thumb {
+        width: 60px;
+        height: 60px;
+    }
+
+    .popular-post-title {
+        font-size: 0.85rem;
+    }
+
+    .social-link {
+        width: 40px;
+        height: 40px;
+    }
+
+    .about-avatar {
+        width: 80px;
+        height: 80px;
+    }
+
+    .about-name {
+        font-size: 1.1rem;
+    }
+
+    .about-description {
+        font-size: 0.85rem;
+    }
+}
+
+/* ==================== */
+/* Widget General Styles */
+/* ==================== */
+
+.widget h2.widget-title,
+.widget h3.widget-title {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+/* Dark mode enhancements */
+.widget {
+    transition: all 0.3s ease;
+}
+
+.widget:hover {
+    border-color: rgba(59, 130, 246, 0.3);
+}
+
+/* Scrollbar para widgets con mucho contenido - Eliminado para permitir expansión vertical */
+.widget ul {
+    max-height: none;
+    overflow-y: visible;
+}
