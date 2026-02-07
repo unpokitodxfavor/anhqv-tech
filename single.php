@@ -2,8 +2,10 @@
 get_header();
 ?>
 
-<main id="primary" class="site-main">
-    <div class="single-post-container">
+<main id="primary" class="site-main main-container">
+    <div class="layout-grid">
+        <div class="content-area">
+            <div class="single-post-container">
 
         <?php
         while (have_posts()):
@@ -192,8 +194,14 @@ get_header();
 
         <?php endwhile; ?>
 
-    </div>
+            </div> <!-- .single-post-container -->
+        </div> <!-- .content-area -->
+
+        <?php get_sidebar(); ?>
+
+    </div> <!-- .layout-grid -->
 </main>
+
 
 <?php
 get_footer();
