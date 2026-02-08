@@ -4,11 +4,13 @@ get_header();
 
 <main id="primary" class="site-main main-container">
     <div class="layout-grid">
-        <aside class="sidebar-left-ad">
-            <?php if (is_active_sidebar('sidebar-left-ad')) : ?>
-                <?php dynamic_sidebar('sidebar-left-ad'); ?>
-            <?php endif; ?>
-        </aside>
+        <?php if (!get_theme_mod('anhqv_hide_left_sidebar', false)): ?>
+            <aside class="sidebar-left-ad">
+                <?php if (is_active_sidebar('sidebar-left-ad')): ?>
+                    <?php dynamic_sidebar('sidebar-left-ad'); ?>
+                <?php endif; ?>
+            </aside>
+        <?php endif; ?>
 
         <div class="content-area">
             <div class="single-post-container">

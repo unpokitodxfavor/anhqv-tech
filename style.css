@@ -360,6 +360,20 @@ p {
     align-items: start;
 }
 
+/* No Left Sidebar Layout */
+.has-no-left-sidebar .layout-grid {
+    grid-template-columns: 1fr 300px;
+}
+
+.has-no-left-sidebar .sidebar-left-ad {
+    display: none;
+}
+
+.has-no-left-sidebar .single-post-container {
+    max-width: 1000px;
+    /* Expand reading width when sidebar is hidden */
+}
+
 .sidebar-left-ad {
     position: sticky;
     top: 2rem;

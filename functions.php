@@ -418,3 +418,40 @@ function anhqv_add_schema_markup()
     }
 }
 add_action('wp_head', 'anhqv_add_schema_markup');
+
+/**
+ * Customizer Layout Options
+ */
+function anhqv_customize_register($wp_customize)
+{
+    $wp_customize->add_section('anhqv_layout_section', array(
+        'title' => esc_html__('Opciones de Diseño', 'anhqv-tech'),
+        'priority' => 30,
+    ));
+
+    $wp_customize->add_setting('anhqv_hide_left_sidebar', array(
+        'default' => false,
+        'sanitize_callback' => 'absint',
+        'transport' => 'refresh',
+    ));
+
+    $wp_customize->add_control('anhqv_hide_left_sidebar', array(
+        'label' => esc_html__('Ocultar Barra Lateral Izquierda (Anuncios)', 'anhqv-tech'),
+        'description' => esc_html__('Oculta la columna de anuncios de la izquierda y expande el contenido central.', 'anhqv-tech'),
+        'section' => 'anhqv_layout_section',
+        'type' => 'checkbox',
+    ));
+}
+add_action('customize_register', 'anhqv_customize_register');
+
+/**
+ * Add custom body classes
+ */
+function anhqv_body_classes($classes)
+{
+    if (get_theme_mod('anhqv_hide_left_sidebar', false)) {
+        $classes[] = 'has-no-left-sidebar';
+    }
+    return $classes;
+}
+add_filter('body_class', 'anhqv_body_classes');
