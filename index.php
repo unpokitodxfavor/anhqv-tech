@@ -6,6 +6,14 @@ get_header();
 
     <div class="layout-grid">
 
+        <?php if (!get_theme_mod('anhqv_hide_left_sidebar', false)): ?>
+            <aside class="sidebar-left-ad">
+                <?php if (is_active_sidebar('sidebar-left-ad')): ?>
+                    <?php dynamic_sidebar('sidebar-left-ad'); ?>
+                <?php endif; ?>
+            </aside>
+        <?php endif; ?>
+
         <div class="content-area">
             <?php if (have_posts()): ?>
 
@@ -51,7 +59,8 @@ get_header();
                                         if ($tags) {
                                             $count = 0;
                                             foreach ($tags as $tag) {
-                                                if ($count >= 3) break; // Limitar a 3 tags
+                                                if ($count >= 3)
+                                                    break; // Limitar a 3 tags
                                                 echo '<a href="' . esc_url(get_tag_link($tag->term_id)) . '">' . esc_html($tag->name) . '</a>';
                                                 $count++;
                                             }
@@ -91,7 +100,8 @@ get_header();
                         <h1 class="page-title"><?php esc_html_e('Nothing Found', 'anhqv-tech'); ?></h1>
                     </header>
                     <div class="page-content">
-                        <p><?php esc_html_e('It seems we can\'t find what you\'re looking for. Perhaps searching can help.', 'anhqv-tech'); ?></p>
+                        <p><?php esc_html_e('It seems we can\'t find what you\'re looking for. Perhaps searching can help.', 'anhqv-tech'); ?>
+                        </p>
                         <?php get_search_form(); ?>
                     </div>
                 </section>

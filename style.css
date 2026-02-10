@@ -1078,216 +1078,232 @@ p {
 
 @media (max-width: 900px) {
 
+    <<<<<<< HEAD
+
     /* Layout Grid Stack - CRITICAL: Must match specificity of .has-no-left-sidebar */
     .layout-grid,
     .has-no-left-sidebar .layout-grid {
-        grid-template-columns: 1fr;
+        =======
+
+        /* Layout Grid Stack */
+        .layout-grid {
+            >>>>>>>9df725015494d03b897e995fb84a9a030b66c974 grid-template-columns: 1fr;
+        }
+
+        .widget-area {
+            position: static;
+        }
+
+        /* Mobile Menu */
+        .mobile-menu-toggle {
+            display: block;
+        }
+
+        .main-navigation {
+            position: fixed;
+            top: 60px;
+            left: 0;
+            right: 0;
+            background: var(--bg-overlay);
+            backdrop-filter: blur(10px);
+            padding: 2rem;
+            transform: translateX(-100%);
+            transition: transform var(--transition-medium);
+        }
+
+        .main-navigation.is-open {
+            transform: translateX(0);
+        }
+
+        .main-navigation ul {
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .main-navigation a {
+            font-size: 1.1rem;
+            display: block;
+            padding: 0.5rem 0;
+        }
+
+        /* Posts Grid */
+        .posts-grid {
+            grid-template-columns: 1fr;
+            gap: 2rem;
+        }
+
+        /* Related Grid */
+        .related-grid {
+            grid-template-columns: 1fr;
+        }
+
+        /* Post Navigation */
+        .post-navigation .nav-links {
+            grid-template-columns: 1fr;
+        }
+
+        .nav-next {
+            text-align: left;
+        }
+
+        /* Single Post */
+        .entry-title {
+            font-size: 2rem;
+        }
+
+        .entry-content {
+            font-size: 1rem;
+        }
+
+        .author-bio {
+            flex-direction: column;
+            text-align: center;
+        }
+
+        /* Social Share */
+        .social-share {
+            flex-wrap: wrap;
+            justify-content: center;
+        }
     }
 
-    .widget-area {
-        position: static;
+    /* Tablet Breakpoint */
+    @media (max-width: 768px) {
+        .main-container {
+            margin: 2rem auto;
+        }
+
+        /* Widgets get more breathing room */
+        .widget {
+            margin-bottom: 1.5rem;
+        }
+
+        /* Search bar improvements */
+        .search-field {
+            font-size: 1rem;
+            padding: 0.9rem 1.5rem;
+        }
     }
 
-    /* Mobile Menu */
-    .mobile-menu-toggle {
-        display: block;
+    @media (max-width: 480px) {
+        .header-container {
+            padding: 0 1rem;
+        }
+
+        .site-tagline {
+            display: none;
+        }
+
+        .main-container {
+            padding: 0 1rem;
+            margin: 1.5rem auto;
+        }
+
+        .entry-thumbnail-full {
+            margin-left: -1rem;
+            margin-right: -1rem;
+            border-radius: 0;
+        }
+
+        .single-post-container {
+            padding: 1rem;
+        }
+
+        /* Full-width search on mobile */
+        .search-form {
+            width: 100%;
+        }
+
+        .search-field {
+            width: 100%;
+            padding: 0.85rem 5rem 0.85rem 1.25rem;
+            font-size: 0.95rem;
+        }
+
+        .search-submit {
+            padding: 0 1rem;
+            font-size: 0.8rem;
+        }
+
+        /* Better widget spacing */
+        .widget {
+            padding: 1.25rem;
+            margin-bottom: 1.25rem;
+        }
+
+        .widget-title {
+            font-size: 1.1rem;
+        }
+
+        /* Fix single post viewport on mobile */
+        .single-post-container {
+            padding: 1.5rem 1rem;
+        }
     }
 
-    .main-navigation {
-        position: fixed;
-        top: 60px;
-        left: 0;
-        right: 0;
-        background: var(--bg-overlay);
-        backdrop-filter: blur(10px);
-        padding: 2rem;
-        transform: translateX(-100%);
-        transition: transform var(--transition-medium);
+    /* Very small mobile devices */
+    @media (max-width: 375px) {
+        .header-container {
+            padding: 0 0.75rem;
+        }
+
+        .brand-text {
+            font-size: 1rem;
+        }
+
+        .main-container {
+            padding: 0 0.75rem;
+        }
+
+        /* Optimize search for very small screens */
+        .search-field {
+            padding: 0.75rem 4.5rem 0.75rem 1rem;
+            font-size: 0.9rem;
+        }
+
+        .search-submit {
+            padding: 0 0.85rem;
+            font-size: 0.75rem;
+        }
+
+        /* Further reduce padding for very small screens */
+        .single-post-container {
+            padding: 1rem 0.75rem;
+        }
     }
 
-    .main-navigation.is-open {
-        transform: translateX(0);
+    /* ==================== */
+    /* Animations */
+    /* ==================== */
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
     }
 
-    .main-navigation ul {
-        flex-direction: column;
-        gap: 1.5rem;
+    .post-card {
+        animation: fadeIn 0.5s ease-out;
     }
 
-    .main-navigation a {
-        font-size: 1.1rem;
-        display: block;
-        padding: 0.5rem 0;
-    }
+    /* ==================== */
+    /* Utilities */
+    /* ==================== */
 
-    /* Posts Grid */
-    .posts-grid {
-        grid-template-columns: 1fr;
-        gap: 2rem;
-    }
-
-    /* Related Grid */
-    .related-grid {
-        grid-template-columns: 1fr;
-    }
-
-    /* Post Navigation */
-    .post-navigation .nav-links {
-        grid-template-columns: 1fr;
-    }
-
-    .nav-next {
-        text-align: left;
-    }
-
-    /* Single Post */
-    .entry-title {
-        font-size: 2rem;
-    }
-
-    .entry-content {
-        font-size: 1rem;
-    }
-
-    .author-bio {
-        flex-direction: column;
+    .text-center {
         text-align: center;
     }
 
-    /* Social Share */
-    .social-share {
-        flex-wrap: wrap;
-        justify-content: center;
-    }
-}
-
-/* Tablet Breakpoint */
-@media (max-width: 768px) {
-    .main-container {
-        margin: 2rem auto;
+    .mt-4 {
+        margin-top: 2rem;
     }
 
-    /* Widgets get more breathing room */
-    .widget {
-        margin-bottom: 1.5rem;
+    .mb-4 {
+        margin-bottom: 2rem;
     }
-
-    /* Search bar improvements */
-    .search-field {
-        font-size: 1rem;
-        padding: 0.9rem 1.5rem;
-    }
-}
-
-@media (max-width: 480px) {
-    .header-container {
-        padding: 0 1rem;
-    }
-
-    .site-tagline {
-        display: none;
-    }
-
-    .main-container {
-        padding: 0 1rem;
-        margin: 1.5rem auto;
-    }
-
-    .entry-thumbnail-full {
-        margin-left: -1rem;
-        margin-right: -1rem;
-        border-radius: 0;
-    }
-
-    .single-post-container {
-        padding: 1rem;
-    }
-
-    /* Full-width search on mobile */
-    .search-form {
-        width: 100%;
-    }
-
-    .search-field {
-        width: 100%;
-        padding: 0.85rem 5rem 0.85rem 1.25rem;
-        font-size: 0.95rem;
-    }
-
-    .search-submit {
-        padding: 0 1rem;
-        font-size: 0.8rem;
-    }
-
-    /* Better widget spacing */
-    .widget {
-        padding: 1.25rem;
-        margin-bottom: 1.25rem;
-    }
-
-    .widget-title {
-        font-size: 1.1rem;
-    }
-}
-
-/* Very small mobile devices */
-@media (max-width: 375px) {
-    .header-container {
-        padding: 0 0.75rem;
-    }
-
-    .brand-text {
-        font-size: 1rem;
-    }
-
-    .main-container {
-        padding: 0 0.75rem;
-    }
-
-    /* Optimize search for very small screens */
-    .search-field {
-        padding: 0.75rem 4.5rem 0.75rem 1rem;
-        font-size: 0.9rem;
-    }
-
-    .search-submit {
-        padding: 0 0.85rem;
-        font-size: 0.75rem;
-    }
-}
-
-/* ==================== */
-/* Animations */
-/* ==================== */
-
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-.post-card {
-    animation: fadeIn 0.5s ease-out;
-}
-
-/* ==================== */
-/* Utilities */
-/* ==================== */
-
-.text-center {
-    text-align: center;
-}
-
-.mt-4 {
-    margin-top: 2rem;
-}
-
-.mb-4 {
-    margin-bottom: 2rem;
-}

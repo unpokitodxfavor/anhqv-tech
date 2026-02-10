@@ -25,7 +25,7 @@ function anhqv_setup()
 
     // Enable support for Post Thumbnails
     add_theme_support('post-thumbnails');
-    
+
     // Tamaños de imagen personalizados
     add_image_size('anhqv-featured', 1200, 675, true); // 16:9
     add_image_size('anhqv-thumb', 600, 400, true);
@@ -156,6 +156,17 @@ function anhqv_widgets_init()
         'after_widget' => '</section>',
         'before_title' => '<h2 class="widget-title">',
         'after_title' => '</h2>',
+    ));
+
+    // Left Ad Sidebar
+    register_sidebar(array(
+        'name' => esc_html__('Left Vertical Ad', 'anhqv-tech'),
+        'id' => 'sidebar-left-ad',
+        'description' => esc_html__('Add vertical ads here. Appears on the left side.', 'anhqv-tech'),
+        'before_widget' => '<section id="%1$s" class="widget %2$s">',
+        'after_widget' => '</section>',
+        'before_title' => '<h3 class="widget-title" style="display:none;">',
+        'after_title' => '</h3>',
     ));
 
     // Footer Widgets
@@ -294,33 +305,36 @@ function anhqv_social_share_buttons()
     ?>
     <div class="social-share">
         <span class="share-label"><?php esc_html_e('Share:', 'anhqv-tech'); ?></span>
-        <a href="https://twitter.com/intent/tweet?url=<?php echo $url; ?>&text=<?php echo $title; ?>" 
-           target="_blank" 
-           rel="noopener noreferrer" 
-           class="share-btn twitter"
-           aria-label="<?php esc_attr_e('Share on Twitter', 'anhqv-tech'); ?>">
-            <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z"></path></svg>
+        <a href="https://twitter.com/intent/tweet?url=<?php echo $url; ?>&text=<?php echo $title; ?>" target="_blank"
+            rel="noopener noreferrer" class="share-btn twitter"
+            aria-label="<?php esc_attr_e('Share on Twitter', 'anhqv-tech'); ?>">
+            <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
+                <path
+                    d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z">
+                </path>
+            </svg>
         </a>
-        <a href="https://www.facebook.com/sharer/sharer.php?u=<?php echo $url; ?>" 
-           target="_blank" 
-           rel="noopener noreferrer" 
-           class="share-btn facebook"
-           aria-label="<?php esc_attr_e('Share on Facebook', 'anhqv-tech'); ?>">
-            <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"></path></svg>
+        <a href="https://www.facebook.com/sharer/sharer.php?u=<?php echo $url; ?>" target="_blank" rel="noopener noreferrer"
+            class="share-btn facebook" aria-label="<?php esc_attr_e('Share on Facebook', 'anhqv-tech'); ?>">
+            <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"></path>
+            </svg>
         </a>
-        <a href="https://www.linkedin.com/shareArticle?mini=true&url=<?php echo $url; ?>&title=<?php echo $title; ?>" 
-           target="_blank" 
-           rel="noopener noreferrer" 
-           class="share-btn linkedin"
-           aria-label="<?php esc_attr_e('Share on LinkedIn', 'anhqv-tech'); ?>">
-            <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"></path><circle cx="4" cy="4" r="2"></circle></svg>
+        <a href="https://www.linkedin.com/shareArticle?mini=true&url=<?php echo $url; ?>&title=<?php echo $title; ?>"
+            target="_blank" rel="noopener noreferrer" class="share-btn linkedin"
+            aria-label="<?php esc_attr_e('Share on LinkedIn', 'anhqv-tech'); ?>">
+            <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"></path>
+                <circle cx="4" cy="4" r="2"></circle>
+            </svg>
         </a>
-        <a href="https://wa.me/?text=<?php echo $title . ' ' . $url; ?>" 
-           target="_blank" 
-           rel="noopener noreferrer" 
-           class="share-btn whatsapp"
-           aria-label="<?php esc_attr_e('Share on WhatsApp', 'anhqv-tech'); ?>">
-            <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"></path></svg>
+        <a href="https://wa.me/?text=<?php echo $title . ' ' . $url; ?>" target="_blank" rel="noopener noreferrer"
+            class="share-btn whatsapp" aria-label="<?php esc_attr_e('Share on WhatsApp', 'anhqv-tech'); ?>">
+            <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
+                <path
+                    d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z">
+                </path>
+            </svg>
         </a>
     </div>
     <?php
@@ -404,3 +418,40 @@ function anhqv_add_schema_markup()
     }
 }
 add_action('wp_head', 'anhqv_add_schema_markup');
+
+/**
+ * Customizer Layout Options
+ */
+function anhqv_customize_register($wp_customize)
+{
+    $wp_customize->add_section('anhqv_layout_section', array(
+        'title' => esc_html__('Opciones de Diseño', 'anhqv-tech'),
+        'priority' => 30,
+    ));
+
+    $wp_customize->add_setting('anhqv_hide_left_sidebar', array(
+        'default' => false,
+        'sanitize_callback' => 'absint',
+        'transport' => 'refresh',
+    ));
+
+    $wp_customize->add_control('anhqv_hide_left_sidebar', array(
+        'label' => esc_html__('Ocultar Barra Lateral Izquierda (Anuncios)', 'anhqv-tech'),
+        'description' => esc_html__('Oculta la columna de anuncios de la izquierda y expande el contenido central.', 'anhqv-tech'),
+        'section' => 'anhqv_layout_section',
+        'type' => 'checkbox',
+    ));
+}
+add_action('customize_register', 'anhqv_customize_register');
+
+/**
+ * Add custom body classes
+ */
+function anhqv_body_classes($classes)
+{
+    if (get_theme_mod('anhqv_hide_left_sidebar', false)) {
+        $classes[] = 'has-no-left-sidebar';
+    }
+    return $classes;
+}
+add_filter('body_class', 'anhqv_body_classes');
