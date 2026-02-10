@@ -13,19 +13,26 @@ Tags: blog, dark, technology, two-columns, responsive-layout, custom-menu, featu
 
 :root {
     /* Identidad de Marca (Tech Magazine) */
-    --accent-primary: #3b82f6; /* Blue 500 */
-    --accent-glow: #60a5fa; /* Blue 400 */
-    --accent-secondary: #f59e0b; /* Amber 500 */
+    --accent-primary: #3b82f6;
+    /* Blue 500 */
+    --accent-glow: #60a5fa;
+    /* Blue 400 */
+    --accent-secondary: #f59e0b;
+    /* Amber 500 */
 
     /* Fondo y Superficies (Dark Mode) */
-    --bg-body: #0f172a; /* Slate 900 */
-    --bg-card: #1e293b; /* Slate 800 */
+    --bg-body: #0f172a;
+    /* Slate 900 */
+    --bg-card: #1e293b;
+    /* Slate 800 */
     --bg-header: #0f172a;
     --bg-overlay: rgba(15, 23, 42, 0.95);
 
     /* Tipografía */
-    --text-main: #f8fafc; /* Slate 50 */
-    --text-muted: #94a3b8; /* Slate 400 */
+    --text-main: #f8fafc;
+    /* Slate 50 */
+    --text-muted: #94a3b8;
+    /* Slate 400 */
 
     --font-heading: 'Outfit', sans-serif;
     --font-body: 'Inter', sans-serif;
@@ -33,7 +40,7 @@ Tags: blog, dark, technology, two-columns, responsive-layout, custom-menu, featu
     /* Espaciado */
     --container-width: 1200px;
     --reading-width: 800px;
-    
+
     /* Transitions */
     --transition-fast: 0.2s ease;
     --transition-medium: 0.3s ease;
@@ -44,7 +51,9 @@ Tags: blog, dark, technology, two-columns, responsive-layout, custom-menu, featu
 /* Reset Básico */
 /* ==================== */
 
-*, *::before, *::after {
+*,
+*::before,
+*::after {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
@@ -115,7 +124,12 @@ img {
 /* Tipografía */
 /* ==================== */
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
     font-family: var(--font-heading);
     color: var(--text-main);
     margin-bottom: 0.75em;
@@ -123,9 +137,18 @@ h1, h2, h3, h4, h5, h6 {
     line-height: 1.2;
 }
 
-h1 { font-size: clamp(2rem, 5vw, 2.5rem); letter-spacing: -0.02em; }
-h2 { font-size: clamp(1.5rem, 4vw, 2rem); }
-h3 { font-size: clamp(1.25rem, 3vw, 1.5rem); }
+h1 {
+    font-size: clamp(2rem, 5vw, 2.5rem);
+    letter-spacing: -0.02em;
+}
+
+h2 {
+    font-size: clamp(1.5rem, 4vw, 2rem);
+}
+
+h3 {
+    font-size: clamp(1.25rem, 3vw, 1.5rem);
+}
 
 p {
     margin-bottom: 1.5rem;
@@ -332,10 +355,40 @@ p {
 
 .layout-grid {
     display: grid;
-    grid-template-columns: 1fr 300px;
-    gap: 3rem;
+    grid-template-columns: 160px 1fr 300px;
+    gap: 2.5rem;
     align-items: start;
 }
+
+/* No Left Sidebar Layout */
+.has-no-left-sidebar .layout-grid {
+    grid-template-columns: 1fr 300px;
+}
+
+.has-no-left-sidebar .sidebar-left-ad {
+    display: none;
+}
+
+.has-no-left-sidebar .single-post-container {
+    max-width: 1000px;
+    /* Expand reading width when sidebar is hidden */
+}
+
+.sidebar-left-ad {
+    position: sticky;
+    top: 2rem;
+}
+
+@media (max-width: 1200px) {
+    .layout-grid {
+        grid-template-columns: 1fr 300px;
+    }
+
+    .sidebar-left-ad {
+        display: none;
+    }
+}
+
 
 /* ==================== */
 /* Posts Grid */
@@ -648,10 +701,21 @@ p {
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
 }
 
-.share-btn.twitter:hover { background: #1DA1F2; }
-.share-btn.facebook:hover { background: #1877F2; }
-.share-btn.linkedin:hover { background: #0077B5; }
-.share-btn.whatsapp:hover { background: #25D366; }
+.share-btn.twitter:hover {
+    background: #1DA1F2;
+}
+
+.share-btn.facebook:hover {
+    background: #1877F2;
+}
+
+.share-btn.linkedin:hover {
+    background: #0077B5;
+}
+
+.share-btn.whatsapp:hover {
+    background: #25D366;
+}
 
 /* ==================== */
 /* Author Bio */
@@ -727,14 +791,18 @@ p {
 }
 
 .related-thumbnail {
+    display: block;
     aspect-ratio: 16/9;
     overflow: hidden;
+    position: relative;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .related-thumbnail img {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    display: block;
     transition: transform 0.5s ease;
 }
 
@@ -1009,8 +1077,10 @@ p {
 /* ==================== */
 
 @media (max-width: 900px) {
-    /* Layout Grid Stack */
-    .layout-grid {
+
+    /* Layout Grid Stack - CRITICAL: Must match specificity of .has-no-left-sidebar */
+    .layout-grid,
+    .has-no-left-sidebar .layout-grid {
         grid-template-columns: 1fr;
     }
 
@@ -1091,6 +1161,24 @@ p {
     }
 }
 
+/* Tablet Breakpoint */
+@media (max-width: 768px) {
+    .main-container {
+        margin: 2rem auto;
+    }
+
+    /* Widgets get more breathing room */
+    .widget {
+        margin-bottom: 1.5rem;
+    }
+
+    /* Search bar improvements */
+    .search-field {
+        font-size: 1rem;
+        padding: 0.9rem 1.5rem;
+    }
+}
+
 @media (max-width: 480px) {
     .header-container {
         padding: 0 1rem;
@@ -1102,6 +1190,7 @@ p {
 
     .main-container {
         padding: 0 1rem;
+        margin: 1.5rem auto;
     }
 
     .entry-thumbnail-full {
@@ -1112,6 +1201,58 @@ p {
 
     .single-post-container {
         padding: 1rem;
+    }
+
+    /* Full-width search on mobile */
+    .search-form {
+        width: 100%;
+    }
+
+    .search-field {
+        width: 100%;
+        padding: 0.85rem 5rem 0.85rem 1.25rem;
+        font-size: 0.95rem;
+    }
+
+    .search-submit {
+        padding: 0 1rem;
+        font-size: 0.8rem;
+    }
+
+    /* Better widget spacing */
+    .widget {
+        padding: 1.25rem;
+        margin-bottom: 1.25rem;
+    }
+
+    .widget-title {
+        font-size: 1.1rem;
+    }
+}
+
+/* Very small mobile devices */
+@media (max-width: 375px) {
+    .header-container {
+        padding: 0 0.75rem;
+    }
+
+    .brand-text {
+        font-size: 1rem;
+    }
+
+    .main-container {
+        padding: 0 0.75rem;
+    }
+
+    /* Optimize search for very small screens */
+    .search-field {
+        padding: 0.75rem 4.5rem 0.75rem 1rem;
+        font-size: 0.9rem;
+    }
+
+    .search-submit {
+        padding: 0 0.85rem;
+        font-size: 0.75rem;
     }
 }
 
@@ -1124,6 +1265,7 @@ p {
         opacity: 0;
         transform: translateY(20px);
     }
+
     to {
         opacity: 1;
         transform: translateY(0);

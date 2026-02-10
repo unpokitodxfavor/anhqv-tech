@@ -342,6 +342,63 @@
     }
 }
 
+/* Mobile-specific improvements */
+@media (max-width: 480px) {
+
+    /* Social icons - balanced grid layout */
+    .social-links-widget {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 0.65rem;
+        justify-items: center;
+    }
+
+    .social-link {
+        width: 42px;
+        height: 42px;
+    }
+
+    /* Category links - better touch targets */
+    .category-link {
+        padding: 0.85rem;
+    }
+
+    .category-icon {
+        font-size: 1.15rem;
+    }
+
+    /* Popular posts - compact layout */
+    .popular-post-thumb {
+        width: 55px;
+        height: 55px;
+    }
+
+    .popular-post-title {
+        font-size: 0.8rem;
+    }
+
+    .popular-post-meta {
+        font-size: 0.7rem;
+    }
+}
+
+/* Very small screens */
+@media (max-width: 375px) {
+    .social-links-widget {
+        gap: 0.5rem;
+    }
+
+    .social-link {
+        width: 38px;
+        height: 38px;
+    }
+
+    .category-link {
+        padding: 0.7rem;
+        gap: 0.6rem;
+    }
+}
+
 /* ==================== */
 /* Widget General Styles */
 /* ==================== */
