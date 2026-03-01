@@ -1,6 +1,6 @@
 /**
  * ANHQV Tech - Main JavaScript
- * Version: 2.0.0
+ * Version: 2.1.0 - Performance Update
  */
 
 (function () {
@@ -19,12 +19,9 @@
             const isExpanded = menuToggle.getAttribute('aria-expanded') === 'true';
             menuToggle.setAttribute('aria-expanded', !isExpanded);
             nav.classList.toggle('is-open');
-
-            // Prevent body scroll when menu is open
             document.body.style.overflow = !isExpanded ? 'hidden' : '';
         });
 
-        // Close menu when clicking outside
         document.addEventListener('click', (e) => {
             if (!nav.contains(e.target) && !menuToggle.contains(e.target)) {
                 if (nav.classList.contains('is-open')) {
@@ -35,7 +32,6 @@
             }
         });
 
-        // Close menu on escape key
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape' && nav.classList.contains('is-open')) {
                 menuToggle.setAttribute('aria-expanded', 'false');
@@ -53,34 +49,39 @@
             anchor.addEventListener('click', function (e) {
                 const href = this.getAttribute('href');
                 if (href === '#') return;
-
                 const target = document.querySelector(href);
                 if (target) {
                     e.preventDefault();
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
                 }
             });
         });
     };
 
-    // ==================== //
-    // Sticky Header on Scroll
-    // ==================== //
+    // ==========================================================================
+    // FIX #8 — Sticky Header: se oculta al bajar solo en MÓVIL.
+    // En escritorio el header permanece siempre visible (mejor UX).
+    // ==========================================================================
     const initStickyHeader = () => {
         const header = document.querySelector('.site-header');
         if (!header) return;
 
-        let lastScroll = 0;
-        const scrollThreshold = 100;
+        // Solo activar hide-on-scroll en pantallas pequeñas
+        const shouldHide = () => window.innerWidth < 900;
 
-        window.addEventListener('scroll', () => {
+        let lastScroll    = 0;
+        let ticking       = false;
+        const threshold   = 100;
+
+        const handleScroll = () => {
+            if (!shouldHide()) {
+                header.style.transform = 'translateY(0)';
+                return;
+            }
+
             const currentScroll = window.pageYOffset;
 
-            // Hide header when scrolling down, show when scrolling up
-            if (currentScroll > scrollThreshold) {
+            if (currentScroll > threshold) {
                 if (currentScroll > lastScroll) {
                     header.style.transform = 'translateY(-100%)';
                 } else {
@@ -91,49 +92,72 @@
             }
 
             lastScroll = currentScroll;
-        });
+        };
+
+        window.addEventListener('scroll', () => {
+            if (!ticking) {
+                window.requestAnimationFrame(() => {
+                    handleScroll();
+                    ticking = false;
+                });
+                ticking = true;
+            }
+        }, { passive: true });
+
+        // Re-evaluar al cambiar tamaño de ventana
+        window.addEventListener('resize', () => {
+            if (!shouldHide()) {
+                header.style.transform = 'translateY(0)';
+            }
+        }, { passive: true });
     };
 
-    // ==================== //
-    // Intersection Observer for Animations
-    // ==================== //
+    // ==========================================================================
+    // FIX #9 — Scroll Animations: las primeras tarjetas visibles (above-the-fold)
+    // NO se ocultan para no penalizar el LCP de Google.
+    // ==========================================================================
     const initScrollAnimations = () => {
         const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
+            threshold:   0.1,
+            rootMargin:  '0px 0px -50px 0px'
         };
 
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
+                    entry.target.classList.add('anim-visible');
+                    observer.unobserve(entry.target); // dejar de observar una vez animado
                 }
             });
         }, observerOptions);
 
-        // Observe post cards
-        document.querySelectorAll('.post-card, .related-post-card').forEach(card => {
-            card.style.opacity = '0';
-            card.style.transform = 'translateY(30px)';
-            card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+        // Calculamos cuántas tarjetas entran roughly above the fold
+        // (aproximación: las 4 primeras no se animan)
+        const ABOVE_FOLD_COUNT = 4;
+
+        document.querySelectorAll('.post-card, .related-post-card').forEach((card, index) => {
+            if (index < ABOVE_FOLD_COUNT) {
+                // Ya visibles: no ocultar, no observar → LCP no se penaliza
+                return;
+            }
+            card.classList.add('anim-hidden');
             observer.observe(card);
         });
     };
 
     // ==================== //
-    // External Links in New Tab
+    // External Links
     // ==================== //
     const initExternalLinks = () => {
-        const links = document.querySelectorAll('a[href^="http"]');
         const currentDomain = window.location.hostname;
-
-        links.forEach(link => {
-            const linkDomain = new URL(link.href).hostname;
-            if (linkDomain !== currentDomain) {
-                link.setAttribute('target', '_blank');
-                link.setAttribute('rel', 'noopener noreferrer');
-            }
+        document.querySelectorAll('a[href^="http"]').forEach(link => {
+            try {
+                const linkDomain = new URL(link.href).hostname;
+                if (linkDomain !== currentDomain) {
+                    link.setAttribute('target', '_blank');
+                    link.setAttribute('rel', 'noopener noreferrer');
+                }
+            } catch (e) { /* URL inválida, ignorar */ }
         });
     };
 
@@ -145,74 +169,46 @@
 
         const progressBar = document.createElement('div');
         progressBar.className = 'reading-progress';
-        progressBar.style.cssText = `
-            position: fixed;
-            top: 60px;
-            left: 0;
-            width: 0;
-            height: 3px;
-            background: linear-gradient(90deg, #3b82f6, #a78bfa);
-            z-index: 999;
-            transition: width 0.1s ease;
-        `;
         document.body.appendChild(progressBar);
 
         window.addEventListener('scroll', () => {
-            const windowHeight = window.innerHeight;
+            const windowHeight   = window.innerHeight;
             const documentHeight = document.documentElement.scrollHeight - windowHeight;
-            const scrolled = window.pageYOffset;
-            const progress = (scrolled / documentHeight) * 100;
+            const scrolled       = window.pageYOffset;
+            const progress       = Math.min((scrolled / documentHeight) * 100, 100);
             progressBar.style.width = `${progress}%`;
-        });
+        }, { passive: true });
     };
 
     // ==================== //
     // Copy Code Blocks
     // ==================== //
     const initCodeCopy = () => {
-        const codeBlocks = document.querySelectorAll('pre code');
-
-        codeBlocks.forEach(block => {
+        document.querySelectorAll('pre code').forEach(block => {
             const button = document.createElement('button');
-            button.className = 'copy-code-btn';
-            button.textContent = 'Copy';
-            button.style.cssText = `
-                position: absolute;
-                top: 0.5rem;
-                right: 0.5rem;
-                padding: 0.25rem 0.75rem;
-                background: rgba(59, 130, 246, 0.8);
-                color: white;
-                border: none;
-                border-radius: 4px;
-                cursor: pointer;
-                font-size: 0.75rem;
-                opacity: 0;
-                transition: opacity 0.2s;
-            `;
+            button.className    = 'copy-code-btn';
+            button.textContent  = 'Copiar';
+            button.type         = 'button';
+            button.setAttribute('aria-label', 'Copiar código');
 
             const pre = block.parentElement;
             pre.style.position = 'relative';
             pre.appendChild(button);
 
-            pre.addEventListener('mouseenter', () => {
-                button.style.opacity = '1';
-            });
-
-            pre.addEventListener('mouseleave', () => {
-                button.style.opacity = '0';
-            });
+            pre.addEventListener('mouseenter', () => { button.style.opacity = '1'; });
+            pre.addEventListener('mouseleave', () => { button.style.opacity = '0'; });
 
             button.addEventListener('click', async () => {
-                const code = block.textContent;
                 try {
-                    await navigator.clipboard.writeText(code);
-                    button.textContent = 'Copied!';
+                    await navigator.clipboard.writeText(block.textContent);
+                    button.textContent = '¡Copiado!';
+                    button.classList.add('copied');
                     setTimeout(() => {
-                        button.textContent = 'Copy';
+                        button.textContent = 'Copiar';
+                        button.classList.remove('copied');
                     }, 2000);
                 } catch (err) {
-                    console.error('Failed to copy code:', err);
+                    console.error('Error al copiar:', err);
                 }
             });
         });
@@ -225,95 +221,161 @@
         const button = document.createElement('button');
         button.className = 'back-to-top';
         button.innerHTML = '↑';
-        button.setAttribute('aria-label', 'Back to top');
-        button.style.cssText = `
-            position: fixed;
-            bottom: 2rem;
-            right: 2rem;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #3b82f6, #a78bfa);
-            color: white;
-            border: none;
-            cursor: pointer;
-            font-size: 1.5rem;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-            z-index: 999;
-        `;
-
+        button.type      = 'button';
+        button.setAttribute('aria-label', 'Volver arriba');
         document.body.appendChild(button);
 
         window.addEventListener('scroll', () => {
-            if (window.pageYOffset > 500) {
-                button.style.opacity = '1';
-                button.style.visibility = 'visible';
-            } else {
-                button.style.opacity = '0';
-                button.style.visibility = 'hidden';
-            }
-        });
+            button.classList.toggle('is-visible', window.pageYOffset > 500);
+        }, { passive: true });
 
         button.addEventListener('click', () => {
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
-        });
-
-        button.addEventListener('mouseenter', () => {
-            button.style.transform = 'scale(1.1)';
-        });
-
-        button.addEventListener('mouseleave', () => {
-            button.style.transform = 'scale(1)';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         });
     };
 
     // ==================== //
-    // Image Lightbox (Simple)
+    // Image Lightbox
     // ==================== //
     const initImageLightbox = () => {
-        const contentImages = document.querySelectorAll('.entry-content img');
+        document.querySelectorAll('.entry-content img').forEach(img => {
+            img.style.cursor = 'zoom-in';
 
-        contentImages.forEach(img => {
-            img.style.cursor = 'pointer';
             img.addEventListener('click', () => {
                 const lightbox = document.createElement('div');
                 lightbox.className = 'image-lightbox';
-                lightbox.style.cssText = `
-                    position: fixed;
-                    top: 0;
-                    left: 0;
-                    width: 100%;
-                    height: 100%;
-                    background: rgba(0, 0, 0, 0.95);
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    z-index: 9999;
-                    cursor: pointer;
-                `;
+                lightbox.setAttribute('role', 'dialog');
+                lightbox.setAttribute('aria-modal', 'true');
+                lightbox.setAttribute('aria-label', img.alt || 'Imagen ampliada');
 
                 const lightboxImg = document.createElement('img');
-                lightboxImg.src = img.src;
-                lightboxImg.style.cssText = `
-                    max-width: 90%;
-                    max-height: 90%;
-                    border-radius: 8px;
-                `;
+                lightboxImg.src   = img.src;
+                lightboxImg.alt   = img.alt || '';
 
+                const closeBtn = document.createElement('button');
+                closeBtn.innerHTML        = '✕';
+                closeBtn.className        = 'lightbox-close';
+                closeBtn.type             = 'button';
+                closeBtn.setAttribute('aria-label', 'Cerrar');
+
+                lightbox.appendChild(closeBtn);
                 lightbox.appendChild(lightboxImg);
                 document.body.appendChild(lightbox);
+                document.body.style.overflow = 'hidden';
 
-                lightbox.addEventListener('click', () => {
-                    lightbox.remove();
+                // Forzar reflow para la animación CSS
+                requestAnimationFrame(() => lightbox.classList.add('is-open'));
+
+                const closeLightbox = () => {
+                    lightbox.classList.remove('is-open');
+                    document.body.style.overflow = '';
+                    setTimeout(() => lightbox.remove(), 300);
+                };
+
+                closeBtn.addEventListener('click', closeLightbox);
+                lightbox.addEventListener('click', (e) => {
+                    if (e.target === lightbox) closeLightbox();
+                });
+                document.addEventListener('keydown', function onKey(e) {
+                    if (e.key === 'Escape') {
+                        closeLightbox();
+                        document.removeEventListener('keydown', onKey);
+                    }
                 });
             });
         });
+    };
+
+    // ==========================================================================
+    // NUEVO — Tabla de Contenidos automática (TOC)
+    // Se inserta al inicio del .entry-content si hay 3 o más headings h2/h3.
+    // Mejora tiempo en página y reduce bounce rate.
+    // ==========================================================================
+    const initTableOfContents = () => {
+        const content = document.querySelector('.entry-content');
+        if (!content) return;
+
+        const headings = content.querySelectorAll('h2, h3');
+        if (headings.length < 3) return; // TOC solo si hay suficiente estructura
+
+        // Añadir IDs automáticamente a los headings que no los tengan
+        headings.forEach((heading, i) => {
+            if (!heading.id) {
+                const slug = heading.textContent
+                    .toLowerCase()
+                    .trim()
+                    .replace(/[^\w\s-]/g, '')
+                    .replace(/\s+/g, '-')
+                    .substring(0, 60);
+                heading.id = slug || `section-${i}`;
+            }
+        });
+
+        // Construir TOC
+        const toc = document.createElement('nav');
+        toc.className    = 'toc-widget';
+        toc.setAttribute('aria-label', 'Tabla de contenidos');
+
+        const tocTitle = document.createElement('p');
+        tocTitle.className   = 'toc-title';
+        tocTitle.textContent = '📋 Contenido';
+
+        const tocList = document.createElement('ol');
+        tocList.className = 'toc-list';
+
+        headings.forEach(heading => {
+            const li   = document.createElement('li');
+            li.className = heading.tagName === 'H3' ? 'toc-item toc-h3' : 'toc-item toc-h2';
+
+            const link       = document.createElement('a');
+            link.href        = `#${heading.id}`;
+            link.textContent = heading.textContent;
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                heading.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                history.pushState(null, null, `#${heading.id}`);
+            });
+
+            li.appendChild(link);
+            tocList.appendChild(li);
+        });
+
+        // Toggle para móvil
+        const toggleBtn       = document.createElement('button');
+        toggleBtn.className   = 'toc-toggle';
+        toggleBtn.type        = 'button';
+        toggleBtn.textContent = 'Mostrar';
+        toggleBtn.setAttribute('aria-expanded', 'false');
+
+        tocTitle.appendChild(toggleBtn);
+
+        toggleBtn.addEventListener('click', () => {
+            const isOpen = toggleBtn.getAttribute('aria-expanded') === 'true';
+            toggleBtn.setAttribute('aria-expanded', !isOpen);
+            toggleBtn.textContent = isOpen ? 'Mostrar' : 'Ocultar';
+            tocList.classList.toggle('is-hidden-mobile', isOpen);
+        });
+
+        toc.appendChild(tocTitle);
+        toc.appendChild(tocList);
+
+        // Insertar al inicio del contenido
+        content.insertBefore(toc, content.firstChild);
+
+        // Resaltar sección activa al hacer scroll
+        const tocLinks = toc.querySelectorAll('a');
+
+        const headingObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    tocLinks.forEach(link => link.classList.remove('toc-active'));
+                    const activeLink = toc.querySelector(`a[href="#${entry.target.id}"]`);
+                    if (activeLink) activeLink.classList.add('toc-active');
+                }
+            });
+        }, { rootMargin: '0px 0px -60% 0px' });
+
+        headings.forEach(h => headingObserver.observe(h));
     };
 
     // ==================== //
@@ -329,11 +391,11 @@
         initCodeCopy();
         initBackToTop();
         initImageLightbox();
+        initTableOfContents();
 
-        console.log('ANHQV Tech v2.0 initialized');
+        console.log('ANHQV Tech v2.1 initialized');
     };
 
-    // Run on DOM ready
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', init);
     } else {

@@ -1,21 +1,23 @@
 <?php
+/**
+ * Index - ANHQV Tech
+ * FIX #10: Clase 'no-sidebar' cuando el sidebar está vacío → layout de 1 columna.
+ */
 get_header();
 ?>
 
 <main id="primary" class="site-main main-container">
 
-    <div class="layout-grid">
+    <div class="layout-grid<?php echo !is_active_sidebar('sidebar-1') ? ' no-sidebar' : ''; ?>">
 
         <div class="content-area">
             <?php if (have_posts()): ?>
 
                 <div class="posts-grid">
-                    <?php
-                    while (have_posts()):
-                        the_post();
-                        ?>
+                    <?php while (have_posts()): the_post(); ?>
 
                         <article id="post-<?php the_ID(); ?>" <?php post_class('post-card'); ?>>
+
                             <?php if (has_post_thumbnail()): ?>
                                 <div class="post-thumbnail">
                                     <a href="<?php the_permalink(); ?>" aria-label="<?php echo esc_attr(get_the_title()); ?>">
@@ -35,9 +37,7 @@ get_header();
                                 </div>
 
                                 <h2 class="post-title">
-                                    <a href="<?php the_permalink(); ?>" rel="bookmark">
-                                        <?php the_title(); ?>
-                                    </a>
+                                    <a href="<?php the_permalink(); ?>" rel="bookmark"><?php the_title(); ?></a>
                                 </h2>
 
                                 <div class="post-excerpt">
@@ -47,11 +47,11 @@ get_header();
                                 <?php if (has_tag()): ?>
                                     <div class="card-tags">
                                         <?php
-                                        $tags = get_the_tags();
+                                        $tags  = get_the_tags();
+                                        $count = 0;
                                         if ($tags) {
-                                            $count = 0;
                                             foreach ($tags as $tag) {
-                                                if ($count >= 3) break; // Limitar a 3 tags
+                                                if ($count >= 3) break;
                                                 echo '<a href="' . esc_url(get_tag_link($tag->term_id)) . '">' . esc_html($tag->name) . '</a>';
                                                 $count++;
                                             }
@@ -70,17 +70,17 @@ get_header();
                                     <?php endif; ?>
                                 </div>
                             </div>
-                        </article><!-- #post-<?php the_ID(); ?> -->
+
+                        </article>
 
                     <?php endwhile; ?>
                 </div><!-- .posts-grid -->
 
                 <?php
-                // Paginación moderna
                 the_posts_pagination(array(
-                    'mid_size' => 2,
-                    'prev_text' => __('← Previous', 'anhqv-tech'),
-                    'next_text' => __('Next →', 'anhqv-tech'),
+                    'mid_size'  => 2,
+                    'prev_text' => __('← Anterior', 'anhqv-tech'),
+                    'next_text' => __('Siguiente →', 'anhqv-tech'),
                 ));
                 ?>
 
@@ -88,22 +88,21 @@ get_header();
 
                 <section class="no-results not-found">
                     <header class="page-header">
-                        <h1 class="page-title"><?php esc_html_e('Nothing Found', 'anhqv-tech'); ?></h1>
+                        <h1 class="page-title"><?php esc_html_e('Sin resultados', 'anhqv-tech'); ?></h1>
                     </header>
                     <div class="page-content">
-                        <p><?php esc_html_e('It seems we can\'t find what you\'re looking for. Perhaps searching can help.', 'anhqv-tech'); ?></p>
+                        <p><?php esc_html_e('No hemos encontrado lo que buscas. Prueba con el buscador.', 'anhqv-tech'); ?></p>
                         <?php get_search_form(); ?>
                     </div>
                 </section>
 
             <?php endif; ?>
-        </div> <!-- .content-area -->
+        </div><!-- .content-area -->
 
         <?php get_sidebar(); ?>
 
-    </div> <!-- .layout-grid -->
+    </div><!-- .layout-grid -->
 
-</main><!-- #main -->
+</main><!-- #primary -->
 
-<?php
-get_footer();
+<?php get_footer(); ?>
