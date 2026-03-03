@@ -1,4 +1,4 @@
-# ANHQV Tech - WordPress Theme v2.0.0
+# ANHQV Tech - WordPress Theme v5.0.0
 
 ![Theme Screenshot](screenshot.png)
 
