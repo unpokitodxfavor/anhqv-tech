@@ -1,16 +1,13 @@
 <?php
-/**
- * Sidebar - ANHQV Tech v3
- * El buscador se eliminó del sidebar porque ahora existe
- * la búsqueda AJAX expandible en el header.
- */
-
 if (!is_active_sidebar('sidebar-1')) {
     return;
 }
 ?>
 
-<aside id="secondary" class="widget-area" role="complementary"
-       aria-label="<?php esc_attr_e('Sidebar', 'anhqv-tech'); ?>">
+
+<aside id="secondary" class="widget-area">
+    <div class="sidebar-search">
+        <?php get_search_form(); ?>
+    </div>
     <?php dynamic_sidebar('sidebar-1'); ?>
-</aside>
+</aside><!-- #secondary -->
