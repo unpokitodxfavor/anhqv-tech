@@ -1,0 +1,304 @@
+/*
+ * ANHQV Tech - style-additions.css
+ * Version: 2.1.0
+ * 
+ * INSTRUCCIONES: Añade este bloque CSS al FINAL de tu style.css existente.
+ * No reemplaces todo el style.css, solo pega esto al final.
+ */
+
+
+/* =============================================================================
+   FIX #8 y #9 — Animaciones de scroll via clase CSS (evita opacity:0 inline)
+   ============================================================================= */
+
+.anim-hidden {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.anim-visible {
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+}
+
+/* Reading Progress Bar (movida a CSS para mejor rendimiento) */
+.reading-progress {
+    position: fixed;
+    top: 60px;
+    left: 0;
+    width: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #3b82f6, #a78bfa);
+    z-index: 999;
+    transition: width 0.1s linear;
+    pointer-events: none;
+}
+
+/* Copy code button */
+.copy-code-btn {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    padding: 0.25rem 0.75rem;
+    background: rgba(59, 130, 246, 0.8);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.75rem;
+    opacity: 0;
+    transition: opacity 0.2s, background 0.2s;
+}
+.copy-code-btn:hover { background: rgba(59, 130, 246, 1); }
+.copy-code-btn.copied { background: #22c55e; }
+
+/* Back to Top */
+.back-to-top {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #3b82f6, #a78bfa);
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 1.5rem;
+    line-height: 1;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    z-index: 999;
+}
+.back-to-top.is-visible {
+    opacity: 1;
+    visibility: visible;
+}
+.back-to-top:hover { transform: scale(1.1); }
+
+
+/* =============================================================================
+   FIX #10 — Layout sin sidebar (clase .no-sidebar en .layout-grid)
+   ============================================================================= */
+
+.layout-grid.no-sidebar {
+    grid-template-columns: 1fr; /* Una sola columna, ancho completo */
+    max-width: 960px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.layout-grid.no-sidebar .posts-grid {
+    grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+}
+
+
+/* =============================================================================
+   FIX #7 — Share button X (Twitter rediseñado)
+   ============================================================================= */
+
+.share-btn.x-twitter:hover {
+    background: #000000;
+    color: white;
+}
+
+/* Quitamos el estilo antiguo de .twitter si existía */
+.share-btn.twitter:hover {
+    background: #000000;
+}
+
+
+/* =============================================================================
+   NUEVO — Tabla de Contenidos (TOC)
+   ============================================================================= */
+
+.toc-widget {
+    background: rgba(59, 130, 246, 0.06);
+    border: 1px solid rgba(59, 130, 246, 0.2);
+    border-radius: 16px;
+    padding: 1.5rem 2rem;
+    margin: 0 0 3rem 0;
+    font-size: 0.95rem;
+}
+
+.toc-title {
+    font-family: var(--font-heading);
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--accent-glow);
+    margin: 0 0 1rem 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: default;
+}
+
+.toc-toggle {
+    background: rgba(59, 130, 246, 0.15);
+    border: 1px solid rgba(59, 130, 246, 0.3);
+    color: var(--accent-glow);
+    border-radius: 6px;
+    padding: 0.2rem 0.75rem;
+    font-size: 0.75rem;
+    cursor: pointer;
+    font-family: var(--font-body);
+    transition: all 0.2s;
+}
+.toc-toggle:hover { background: rgba(59, 130, 246, 0.3); }
+
+.toc-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    counter-reset: toc-counter;
+}
+
+.toc-list.is-hidden-mobile {
+    display: none;
+}
+
+.toc-item {
+    counter-increment: toc-counter;
+}
+
+.toc-item a {
+    color: var(--text-muted);
+    text-decoration: none;
+    display: flex;
+    align-items: baseline;
+    gap: 0.6rem;
+    padding: 0.3rem 0.5rem;
+    border-radius: 6px;
+    transition: all 0.2s;
+    line-height: 1.4;
+}
+
+.toc-item a::before {
+    content: counter(toc-counter, decimal-leading-zero);
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: var(--accent-primary);
+    opacity: 0.6;
+    min-width: 1.8em;
+    flex-shrink: 0;
+}
+
+.toc-item a:hover,
+.toc-item a.toc-active {
+    color: var(--text-main);
+    background: rgba(59, 130, 246, 0.1);
+    padding-left: 0.75rem;
+}
+
+.toc-item a.toc-active {
+    color: var(--accent-glow);
+    font-weight: 600;
+}
+
+/* H3 anidados con indentación */
+.toc-h3 {
+    padding-left: 1.5rem;
+}
+
+.toc-h3 a::before {
+    content: '└';
+    color: var(--text-muted);
+    opacity: 0.5;
+    font-size: 0.85rem;
+}
+
+
+/* =============================================================================
+   NUEVO — Lightbox mejorado con animación y botón de cierre
+   ============================================================================= */
+
+.image-lightbox {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    cursor: zoom-out;
+    transition: background 0.3s ease;
+}
+
+.image-lightbox.is-open {
+    background: rgba(0, 0, 0, 0.95);
+}
+
+.image-lightbox img {
+    max-width: 90vw;
+    max-height: 90vh;
+    border-radius: 8px;
+    transform: scale(0.8);
+    transition: transform 0.3s ease;
+    cursor: default;
+}
+
+.image-lightbox.is-open img {
+    transform: scale(1);
+}
+
+.lightbox-close {
+    position: absolute;
+    top: 1.5rem;
+    right: 1.5rem;
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 44px;
+    height: 44px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s;
+}
+.lightbox-close:hover { background: rgba(255, 255, 255, 0.25); }
+
+
+/* =============================================================================
+   RESPONSIVE — TOC en móvil colapsa por defecto
+   ============================================================================= */
+
+@media (max-width: 768px) {
+    .toc-widget {
+        padding: 1.25rem;
+    }
+
+    .toc-list {
+        display: none; /* Colapsado por defecto en móvil; el botón lo abre */
+    }
+
+    .toc-list.is-hidden-mobile {
+        display: none;
+    }
+
+    /* Cuando el toggle dice "Ocultar" → mostrar */
+    .toc-toggle[aria-expanded="true"] + .toc-list,
+    .toc-list:not(.is-hidden-mobile) {
+        display: flex;
+    }
+}
+
+@media (min-width: 769px) {
+    /* En escritorio el TOC siempre visible */
+    .toc-list,
+    .toc-list.is-hidden-mobile {
+        display: flex !important;
+    }
+
+    .toc-toggle {
+        display: none; /* Sin botón toggle en escritorio */
+    }
+}
